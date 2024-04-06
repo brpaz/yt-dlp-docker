@@ -2,8 +2,8 @@
 
 > A docker image containing [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://ffmpeg.org/), useful for backing up online videos.
 
-![LICENSE](https://img.shields.io/github/license/brpaz/youtube-dlp-docker?style=for-the-badge)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/brpaz/youtube-dlp-docker/CI?style=for-the-badge)](https://github.com/brpaz/youtube-dlp-docker)/actions/ci
+![LICENSE](https://img.shields.io/github/license/brpaz/yt-dlp-docker?style=for-the-badge)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/brpaz/yt-dlp-docker/ci.yml?style=for-the-badge)](https://github.com/brpaz/youtube-dlp-docker/actions/ci)
 
 ## What is included
 
@@ -11,11 +11,12 @@
 
 ## Usage
 
-You can download this image from GitHub Package registry
-
 ```sh
-docker run --rm ghcr.io/brpaz/yt-dlp-docker https://www.youtube.com/watch?v=9xwazD5SyVg
+docker run --rm -v ${PWD}:/data  -w /data ghcr.io/brpaz/yt-dlp-docker "https://www.youtube.com/watch?v=9xwazD5SyVg"
 ```
+
+This container image has yt-dlp defined as entrypoint. Check [documentation](https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#usage-and-options) for supported commands and options.
+
 
 ## Contributing
 
