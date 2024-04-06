@@ -1,0 +1,11 @@
+schemaVersion: 2.0.0
+commandTests:
+  - name: "YouTube-DLP is installed"
+    command: yt-dlp
+    args: ["--version"]
+    exitCode: 0
+
+  - name: "FFmpeg is installed"
+    command: ffmpeg
+    args: ["-version"]
+    exitCode: 0

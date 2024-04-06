@@ -1,0 +1,59 @@
+# https://taskfile.dev
+
+version: "3"
+
+vars:
+  IMAGE_NAME: youtube-dlp
+  IMAGE_TAG: local-dev
+
+tasks:
+  default:
+    cmds:
+      - task -l
+
+  dev:
+    desc: "Start a shell in the dev environment"
+    cmds:
+      - devbox shell
+
+  lint:
+    desc: "Lint the Dockerfile"
+    cmds:
+      - hadolint Dockerfile
+
+  build:
+    desc: "Build the image"
+    cmds:
+      - docker buildx build --platform linux/amd64 --load -t {{.IMAGE_NAME}}:{{.IMAGE_TAG}} .
+
+  run:
+    desc: "Run the image"
+    deps:
+      - build
+    cmds:
+      - docker run --rm -it {{.IMAGE_NAME}}:local-dev {{.CLI_ARGS}}
+
+  test:
+    desc: "Run tests on the image"
+    deps:
+      - build
+    cmds:
+      - |
+        docker run -i --rm \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          -v $PWD:/test gcr.io/gcp-runtimes/container-structure-test:v1.16.0 \
+          test \
+          --image {{.IMAGE_NAME}}:{{.IMAGE_TAG}} \
+          --config test/structure-tests.yaml
+
+  security:
+    desc: "Run security checks on the image"
+    deps:
+      - build
+    cmds:
+      - |
+        docker run \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          -v $PWD/.cache/trivy:/tmp/trivy/ \
+          --rm \
+          aquasec/trivy:0.50.1 --cache-dir /tmp/trivy/ image {{ .IMAGE_NAME }}:{{ .IMAGE_TAG }}

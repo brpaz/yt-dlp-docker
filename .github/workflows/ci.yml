@@ -1,0 +1,90 @@
+# https://docs.docker.com/build/ci/github-actions/examples/
+name: CI
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "main"
+  release:
+    types:
+      - published
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  IMAGE_NAME: "yt-dlp"
+  TEST_TAG: brpaz/yt-dlp:test
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      packages: write
+      issues: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Lint Dockerfile
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          failure-threshold: error
+
+      - name: Setup container structure tests
+        run: |
+          curl -fsLO https://storage.googleapis.com/container-structure-test/v1.16.0/container-structure-test-linux-amd64
+          chmod +x container-structure-test-linux-amd64
+          sudo mv container-structure-test-linux-amd64 /usr/local/bin/container-structure-test
+          container-structure-test version
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: |
+            ghcr.io/${{ github.repository }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+          labels: |
+            org.opencontainers.image.title=Youtube-Dlp
+            org.opencontainers.image.description=A docker image containing yt-dlp and ffmpeg. Useful for backup your media from youtube and other providers
+
+      - name: Build test image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          load: true
+          tags: ${{ env.TEST_TAG }}
+
+      - name: Run tests
+        run: |
+          container-structure-test test --image ${{ env.TEST_TAG }} --config structure-tests.yaml
+
+      - name: Login to GHCR
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Push to registry
+        uses: docker/build-push-action@v4
+        if: github.event_name != 'pull_request'
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
