@@ -5,7 +5,6 @@ pre-commit:
   commands:
     lint:
       run: task lint
-      files: Dockerfile
 
 pre-push:
   commands:
