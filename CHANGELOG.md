@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.3.0 - 2024-04-06
+
+### What's Changed
+
+#### 🚀 Features
+
+- feat: add non root user @brpaz (#7)
+
+**Full Changelog**: https://github.com/brpaz/yt-dlp-docker/compare/v0.2.0...v0.3.0
+
 ## v0.2.0 - 2024-04-06
 
 ### What's Changed
