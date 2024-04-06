@@ -3,7 +3,7 @@
 > A docker image containing [yt-dlp](https://github.com/yt-dlp/yt-dlp) and [ffmpeg](https://ffmpeg.org/), useful for backing up online videos.
 
 ![LICENSE](https://img.shields.io/github/license/brpaz/yt-dlp-docker?style=for-the-badge)
-[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/brpaz/yt-dlp-docker/ci.yml?style=for-the-badge)](https://github.com/brpaz/youtube-dlp-docker/actions/ci)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/brpaz/yt-dlp-docker/ci.yml?branch=main&style=for-the-badge)](https://github.com/brpaz/yt-dlp-docker/actions/ci)
 
 ## What is included
 
