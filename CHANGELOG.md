@@ -1,5 +1,19 @@
 # Changelog
 
+## v0.2.0 - 2024-04-06
+
+### What's Changed
+
+#### 🚀 Features
+
+- feat: add bash and curl @brpaz (#6)
+
+#### 🧩 Dependency Updates
+
+- build(deps): bump docker/metadata-action from 4 to 5 @dependabot (#2)
+
+**Full Changelog**: https://github.com/brpaz/yt-dlp-docker/compare/v0.1.0...v0.2.0
+
 ## v0.1.0 - 2024-04-06
 
 ### What's Changed
