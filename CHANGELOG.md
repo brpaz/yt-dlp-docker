@@ -1,5 +1,13 @@
 # Changelog
 
+## v0.3.1 - 2024-04-13
+
+### What's Changed
+
+🚀 Features
+
+- Force update of youtube-dlp
+
 ## v0.3.0 - 2024-04-06
 
 ### What's Changed
