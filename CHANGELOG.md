@@ -1,5 +1,15 @@
 # Changelog
 
+## v0.4.0 - 2024-04-13
+
+### What's Changed
+
+#### 🚀 Features
+
+- feat: migrate to debian-slim base image for better compatibility @brpaz (#8)
+
+**Full Changelog**: https://github.com/brpaz/yt-dlp-docker/compare/v0.3.0...v0.4.0
+
 ## v0.3.1 - 2024-04-13
 
 ### What's Changed
