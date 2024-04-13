@@ -13,8 +13,6 @@ ENV PUID=${PUID}
 ENV USER=app
 ENV TZ="UTC"
 
-SHELL ["/bin/sh", "-o", "pipefail", "-c"]
-
 # Create user and install dependencies
 # hadolint ignore=DL3008
 RUN groupadd -g ${PGID} ${USER} && \
