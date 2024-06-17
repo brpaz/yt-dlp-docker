@@ -61,7 +61,7 @@ jobs:
             org.opencontainers.image.description=A docker image containing yt-dlp and ffmpeg. Useful for backup your media from youtube and other providers
 
       - name: Build test image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: .
           load: true
@@ -80,7 +80,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Push to registry
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         if: github.event_name != 'pull_request'
         with:
           context: .
